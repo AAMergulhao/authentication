@@ -1,7 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from "typeorm";
+import Role from "./Role";
 
+export interface UserI {
+  id: number;
+  email: string;
+  password: string;
+}
 @Entity("user")
-export class User {
+class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -10,4 +22,12 @@ export class User {
 
   @Column()
   password: string;
+
+  @ManyToMany((type) => Role, (role) => role.users, {
+    onDelete: "CASCADE",
+  })
+  @JoinTable({ name: "user_roles" })
+  roles: Role[];
 }
+
+export default User;
