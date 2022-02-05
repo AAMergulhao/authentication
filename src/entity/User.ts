@@ -4,6 +4,7 @@ import {
   Column,
   ManyToMany,
   JoinTable,
+  BaseEntity,
 } from "typeorm";
 import Role from "./Role";
 
@@ -13,7 +14,7 @@ export interface UserI {
   password: string;
 }
 @Entity("user")
-class User {
+class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -4,6 +4,8 @@ import * as bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 
+import routes from "./routes";
+import { createConnection } from "typeorm";
 class App {
   public server: express.Application;
 
@@ -17,10 +19,12 @@ class App {
   }
 
   private async setup() {
-    this.server.use(express.static(path.join(__dirname, "../public/"))); //Provide static files to the applications
     this.server.use(express.json());
     this.server.use(cors());
     this.server.use(bodyParser.json());
+    this.server.use(routes);
+
+    await createConnection();
   }
 }
 
