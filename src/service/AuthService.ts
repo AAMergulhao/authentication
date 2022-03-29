@@ -81,6 +81,16 @@ class AuthService {
       throw new Error(error.message);
     }
   }
+
+  public async verify(accessToken: string): Promise<boolean> {
+    try {
+      const isTokenValid: any = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
+
+      return isTokenValid ? true : false;
+    } catch (error) {
+      throw { status: 401, message: error.message };
+    }
+  }
 }
 
 export default AuthService;
