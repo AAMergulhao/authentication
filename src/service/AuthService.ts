@@ -1,4 +1,4 @@
-import User, { UserI } from "../entity/User";
+import User from "../entity/User";
 
 import { getRepository } from "typeorm";
 import * as bcrypt from "bcrypt";
@@ -82,11 +82,11 @@ class AuthService {
     }
   }
 
-  public async verify(accessToken: string): Promise<boolean> {
+  public verify(accessToken: string): any {
     try {
       const isTokenValid: any = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
 
-      return isTokenValid ? true : false;
+      return isTokenValid;
     } catch (error) {
       throw { status: 401, message: error.message };
     }

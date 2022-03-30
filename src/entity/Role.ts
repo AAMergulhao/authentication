@@ -1,4 +1,3 @@
-import { userInfo } from "os";
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
 import User from "./User";
 
