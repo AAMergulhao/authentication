@@ -9,9 +9,9 @@ import {
 import Role from "./Role";
 
 export interface UserI {
-  id: number;
-  email: string;
-  password: string;
+  id?: number;
+  email?: string;
+  password?: string;
 }
 @Entity("user")
 class User extends BaseEntity {

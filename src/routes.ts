@@ -16,5 +16,7 @@ router.get("/auth/refresh", authController.refresh);
 router.get("/auth/verify", authController.verify);
 
 router.get("/user/", tokenVerifyMiddleware, userController.get);
+router.put("/user/", tokenVerifyMiddleware, userController.update);
+router.delete("/user/", tokenVerifyMiddleware, userController.delete);
 
 export default router;
