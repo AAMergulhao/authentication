@@ -10,7 +10,7 @@ class UserController {
 
     public get = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const user = await this.userService.get(req.email);
+            const user = await this.userService.get(req.id);
 
             return res.status(200).json(user);
         } catch (error) {

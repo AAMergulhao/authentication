@@ -2,9 +2,9 @@ import User, { UserI } from '../entity/User';
 
 class UserService {
 
-    public async get(email: string): Promise<UserI> {
+    public async get(id: number): Promise<UserI> {
         try {
-            const user = await User.findOne({ email }, { relations: ['roles'] });
+            const user = await User.findOne({ id }, { relations: ['roles'] });
             if (!user) {
                 throw new Error('User not found');
             }

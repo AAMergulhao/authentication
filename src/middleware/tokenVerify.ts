@@ -15,7 +15,7 @@ function tokenVerify(req: Request, res: Response, next: NextFunction) {
         const authService = new AuthService();
 
         const decodedToken = authService.verify(accessToken);
-        req.email = decodedToken.email;
+        req.id = decodedToken.id;
         return next();
     } catch (error) {
         return res.status(401).json({
