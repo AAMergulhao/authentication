@@ -1,11 +1,10 @@
 import express from "express";
-import * as path from "path";
 import * as bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
-
-import routes from "./routes";
 import { createConnection } from "typeorm";
+import routes from "./routes/routes";
+import swagger from './routes/swagger';
 class App {
   public server: express.Application;
 
@@ -23,6 +22,7 @@ class App {
     this.server.use(cors());
     this.server.use(bodyParser.json());
     this.server.use(routes);
+    this.server.use(swagger);
 
     await createConnection();
   }

@@ -1,0 +1,155 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Authentication API"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080",
+            "description": "Ambiente local"
+        }
+    ],
+    "paths": {
+        "/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Gets user data",
+                "description": "Gets user data using the token provided on the header as filter.",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Updates user data",
+                "description": "Updates user data using the token provided on the header as filter",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "Body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                                "email": {
+                                    "type": "string",
+                                    "example": "updatedEmail@test.com"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS",
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Deletes user",
+                "description": "Deletes user data using the token provided on the header as filter",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "SUCCESS",
+                        "schema": {
+                            "type": "string",
+                            "example": "User successfully deleted."
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization"
+            }
+        },
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 1
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "test@test.com"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Role"
+                        }
+                    }
+                }
+            },
+            "Role": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "number",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "ADMIN"
+                    }
+                }
+            }
+        }
+    }
+}

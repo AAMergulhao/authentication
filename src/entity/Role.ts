@@ -7,7 +7,7 @@ class Role {
   id: number;
 
   @Column()
-  role: string;
+  name: string;
 
   @ManyToMany((type) => User, (user) => user.roles)
   users: User[];

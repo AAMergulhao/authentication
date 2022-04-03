@@ -14,7 +14,7 @@ export class CreateRoleTable1643124314116 implements MigrationInterface {
             isGenerated: true,
           },
           {
-            name: "role",
+            name: "name",
             type: "varchar(200)",
             isUnique: true,
           },

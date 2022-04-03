@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import tokenVerifyMiddleware from "./middleware/tokenVerify";
+import tokenVerifyMiddleware from "../middleware/tokenVerify";
 
-import AuthController from "./controller/AuthController";
-import UserController from "./controller/UserController";
+import AuthController from "../controller/AuthController";
+import UserController from "../controller/UserController";
 
 const authController = new AuthController();
 const userController = new UserController();
