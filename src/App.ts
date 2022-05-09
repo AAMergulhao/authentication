@@ -3,6 +3,8 @@ import * as bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import { createConnection } from "typeorm";
+import colors from 'colors';
+
 import routes from "./routes/routes";
 import swagger from './routes/swagger';
 class App {
@@ -24,7 +26,10 @@ class App {
     this.server.use(routes);
     this.server.use(swagger);
 
-    await createConnection();
+    await createConnection().catch((error) => {
+      console.log(colors.red(`Database connection could not be stablished: ${error.message}`));
+      process.exit();
+    });
   }
 }
 
