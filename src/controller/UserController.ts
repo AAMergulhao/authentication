@@ -49,6 +49,24 @@ class UserController {
             });
         }
     };
+
+    public addRole = async (req: Request, res: Response): Promise<Response> => {
+        try {
+            const { userId, roleId } = req.body;
+
+            if (!userId || !roleId) {
+                throw new Error("User id and Role id cannot be null or empty.");
+            }
+
+            const user = await this.userService.addRole(userId, roleId);
+
+            return res.status(200).json(user);
+        } catch (error) {
+            return res.status(500).json({
+                message: error.message,
+            });
+        }
+    };
 }
 
 export default UserController;

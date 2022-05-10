@@ -20,6 +20,7 @@ router.get("/auth/verify", authController.verify);
 router.get("/user/", tokenVerifyMiddleware, userController.get);
 router.put("/user/", tokenVerifyMiddleware, userController.update);
 router.delete("/user/", tokenVerifyMiddleware, userController.delete);
+router.post("/user/role", tokenVerifyMiddleware, userController.addRole);
 
 router.get("/role/", roleController.fetch);
 router.post("/role/", roleController.create);

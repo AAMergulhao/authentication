@@ -12,6 +12,7 @@ export interface UserI {
   id?: number;
   email?: string;
   password?: string;
+  roles?: Array<Role>
 }
 @Entity("user")
 class User extends BaseEntity {

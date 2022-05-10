@@ -1,3 +1,4 @@
+import Role from '../entity/Role';
 import User, { UserI } from '../entity/User';
 
 class UserService {
@@ -19,6 +20,9 @@ class UserService {
 
     public async update(user: UserI): Promise<UserI> {
         try {
+            if (user.email.trim() === "") {
+                throw new Error('E-mail cannot be null or empty');
+            }
             await User.save(user as User);
 
             const updatedUser = await User.findOne({ id: user.id });
@@ -39,6 +43,29 @@ class UserService {
         } catch (error) {
             throw new Error(error.message)
         }
+    }
+
+    public async addRole(userId: number, roleId: number): Promise<User> {
+        const user = await this.get(userId);
+
+        if (!user) {
+            throw new Error('User does not exists');
+        }
+
+        const role = await Role.findOne({ id: roleId });
+
+        if (!role) {
+            throw new Error('Role does not exists');
+        }
+
+        const userAlreadyHaveRole = user.roles.find((userRole) => { return userRole.id === role.id });
+        if (userAlreadyHaveRole) {
+            throw new Error("User already have this role");
+        }
+
+        user.roles.push(role);
+
+        return await User.save(user as User);
     }
 
 }

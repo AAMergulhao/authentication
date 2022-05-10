@@ -57,7 +57,7 @@ class AuthService {
       password = hashPassword(password);
 
       const user = await User.findOne({ email, password });
-      if (!user.hasId()) {
+      if (!user) {
         throw new Error("Email and password does not match.");
       }
 
