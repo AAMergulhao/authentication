@@ -21,10 +21,11 @@ router.get("/user/", tokenVerifyMiddleware, userController.get);
 router.put("/user/", tokenVerifyMiddleware, userController.update);
 router.delete("/user/", tokenVerifyMiddleware, userController.delete);
 router.post("/user/role", tokenVerifyMiddleware, userController.addRole);
+router.delete("/user/role", tokenVerifyMiddleware, userController.removeRole);
 
-router.get("/role/", roleController.fetch);
-router.post("/role/", roleController.create);
-router.delete("/role/:id", roleController.delete);
-router.get("/role/:id", roleController.get);
+router.get("/role/", tokenVerifyMiddleware, roleController.fetch);
+router.post("/role/", tokenVerifyMiddleware, roleController.create);
+router.delete("/role/:id", tokenVerifyMiddleware, roleController.delete);
+router.get("/role/:id", tokenVerifyMiddleware, roleController.get);
 
 export default router;

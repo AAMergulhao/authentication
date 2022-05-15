@@ -68,6 +68,31 @@ class UserService {
         return await User.save(user as User);
     }
 
+    public async removeRole(userId: number, roleId: number): Promise<User> {
+        let user = await this.get(userId);
+
+        if (!user) {
+            throw new Error('User does not exists');
+        }
+
+        const role = await Role.findOne({ id: roleId });
+
+        if (!role) {
+            throw new Error('Role does not exists');
+        }
+
+        const userAlreadyHaveRole = user.roles.find((userRole) => { return userRole.id === role.id });
+        if (!userAlreadyHaveRole) {
+            throw new Error("User does not have this role");
+        }
+
+        user.roles = user.roles.filter(role => {
+            return role.id !== roleId
+        })
+
+        return await User.save(user as User);
+    }
+
 }
 
 export default UserService;
