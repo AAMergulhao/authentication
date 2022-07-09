@@ -7,4 +7,6 @@ temp/
 
 .env.local
 .env.development
-.env;production
+.env.production
+
+package-lock.json
