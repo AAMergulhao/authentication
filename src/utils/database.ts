@@ -1,14 +1,15 @@
 
-import { createConnection, Connection } from "typeorm";
-import colors from 'colors';
+import { createConnection, Connection, getConnection } from "typeorm";
 
 import databaseConfig from "../config/databaseConfig";
 
-const createDatabaseConnection = async (): Promise<void | Connection> => {
-    return await createConnection(databaseConfig).catch((error) => {
-        console.log(colors.red(`Database connection could not be stablished: ${error.message}`));
-        process.exit();
-    });
+const createDatabaseConnection = async (): Promise<Connection> => {
+    return await createConnection(databaseConfig);
 }
 
-export { createDatabaseConnection }
+const closeDatabaseConnection = async (): Promise<void> => {
+    return await getConnection().close();
+}
+
+
+export { createDatabaseConnection, closeDatabaseConnection }
