@@ -1,10 +1,16 @@
 
-import { createDatabaseConnection } from "../src/utils/database";
 import * as tsNode from 'ts-node';
+import dotenv from 'dotenv';
+
+import { createDatabaseConnection } from "../src/utils/database";
 
 tsNode.register()
 
 const globalSetup = async (): Promise<void> => {
+    dotenv.config({
+        path: `.env.${process.env.NODE_ENV}`,
+    });
+
     console.log('\n');
     const connection = await createDatabaseConnection();
 
