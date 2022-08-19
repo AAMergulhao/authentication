@@ -41,7 +41,7 @@
    "scripts": {
       "start": "ts-node src/index.ts",
       "start:local": "export NODE_ENV=local && dotenv -e .env.$NODE_ENV -- nodemon src/index.ts",
-      "test": "export NODE_ENV=local && jest --detectOpenHandles && ts-node test/globalTeardown.ts",
+      "test": "export NODE_ENV=test && jest; ts-node test/globalTeardown.ts",
       "typeorm:local": "export NODE_ENV=local && dotenv -e .env.$NODE_ENV -- node --require ts-node/register ./node_modules/typeorm/cli.js -f ./src/config/databaseConfig.ts"
    }
 }
