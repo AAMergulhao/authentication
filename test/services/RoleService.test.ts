@@ -1,4 +1,4 @@
-import RoleService from "../../src/service/RoleService";
+import RoleService from "../../src/services/RoleService";
 import { closeDatabaseConnection, createDatabaseConnection } from "../../src/utils/database";
 
 const roleService: RoleService = new RoleService();

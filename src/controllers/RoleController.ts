@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import RoleService from "../service/RoleService";
+import RoleService from "../services/RoleService";
 class RoleController {
     public roleService: RoleService;
 

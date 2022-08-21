@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import UserService from "../service/UserService";
+import UserService from "../services/UserService";
 class UserController {
     public userService: UserService;
 

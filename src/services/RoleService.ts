@@ -8,7 +8,8 @@ class RoleService {
         if (await Role.findOne({ name })) {
             throw new Error("There is already a role with this name");
         }
-        return await Role.save({ name } as Role);
+        const newRole = Role.create({name})
+        return await Role.save(newRole);
     }
 
     public async fetch(): Promise<Role[]> {

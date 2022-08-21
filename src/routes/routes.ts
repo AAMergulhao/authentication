@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import tokenVerifyMiddleware from "../middleware/tokenVerify";
+import tokenVerifyMiddleware from "../middlewares/tokenVerify";
 
-import AuthController from "../controller/AuthController";
-import UserController from "../controller/UserController";
-import RoleController from "../controller/RoleController";
+import AuthController from "../controllers/AuthController";
+import UserController from "../controllers/UserController";
+import RoleController from "../controllers/RoleController";
 
 const authController = new AuthController();
 const userController = new UserController();

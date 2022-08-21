@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import AuthService from '../service/AuthService';
+import AuthService from '../services/AuthService';
 
 function tokenVerify(req: Request, res: Response, next: NextFunction) {
     try {
