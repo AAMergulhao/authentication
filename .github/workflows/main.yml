@@ -18,12 +18,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          
+
       - name: 'Create env file'
         run: |
           touch .env.test
-          echo API_ENDPOINT="https://xxx.execute-api.us-west-2.amazonaws.com" >> .env
-          echo API_KEY=${{ secrets.API_KEY }} >> .env
           echo ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }} >> .env
           echo DATABASE_HOST: ${{ secrets.DATABASE_HOST }} >> .env
           echo DATABASE_NAME: ${{ secrets.DATABASE_NAME }} >> .env
@@ -33,8 +31,9 @@ jobs:
           echo PASSWORD_SALT_ROUNDS: ${{ secrets.PASSWORD_SALT_ROUNDS }} >> .env
           echo REFRESH_TOKEN_EXPIRATION: ${{ secrets.REFRESH_TOKEN_EXPIRATION }} >> .env
           echo REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }} >> .env
-          cat .env
+          pwd .env.test
+          cat .env.test
 
       - run: npm i
-      - run: npx jest
+      - run: export NODE_ENV=test && npx jest
       - run: npm run test-teardown
