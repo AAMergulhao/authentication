@@ -1,7 +1,7 @@
 {
-   "name": "new-typeorm-project",
+   "name": "auth-service",
    "version": "0.0.1",
-   "description": "Awesome project developed with TypeORM.",
+   "description": "Authentication Service.",
    "devDependencies": {
       "@babel/plugin-proposal-decorators": "^7.18.6",
       "@babel/preset-env": "^7.18.6",
