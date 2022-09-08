@@ -85,7 +85,7 @@ class UserService {
     }
 
     public async removeRole(userId: number, roleId: number): Promise<User> {
-        let user = await this.get(userId);
+        const user = await this.get(userId);
 
         if (!user) {
             throw new Error('User does not exists');
