@@ -53,8 +53,8 @@ jobs:
 
   teardown:
     runs-on: ubuntu-latest
-    if: ${{ always() }}
-    needs: tests
+    if: always()
+    needs: [lint, tests]
     strategy:
       matrix:
         node-version: [14.x]
