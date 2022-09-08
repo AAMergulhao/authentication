@@ -3,6 +3,21 @@ import User, { UserI } from '../entity/User';
 
 class UserService {
 
+    public create = async (email: string, password: string): Promise<UserI> => {
+        try {
+            if (!email.trim() || !password.trim()) {
+                throw new Error('E-mail and password cannot be null or empty.');
+            }
+
+            const newUser = await User.create({ email, password });
+
+            return await User.save(newUser);
+        } catch (error) {
+            throw new Error(error.message);
+        }
+
+    }
+
     public async get(id: number): Promise<UserI> {
         try {
             const user = await User.findOne({ id }, { relations: ['roles'] });
@@ -11,6 +26,7 @@ class UserService {
             }
 
             delete user.password;
+
             return user
         } catch (error) {
             throw new Error(error.message);

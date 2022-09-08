@@ -1,4 +1,5 @@
 import User from "../entity/User";
+import UserService from "./UserService";
 
 import { getRepository } from "typeorm";
 import * as bcrypt from "bcrypt";
@@ -34,7 +35,14 @@ function hashPassword(password: string): string {
   );
   return password;
 }
+
 class AuthService {
+  public userService: UserService;
+
+  constructor() {
+    this.userService = new UserService();
+  }
+
   public async signUp(email: string, password: string): Promise<boolean> {
     try {
       if (await getRepository(User).findOne({ email })) {
@@ -43,7 +51,7 @@ class AuthService {
 
       password = hashPassword(password);
 
-      await User.save({ email, password } as User);
+      await this.userService.create(email, password)
 
       return true;
     } catch (error) {
