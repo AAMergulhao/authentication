@@ -26,12 +26,11 @@ jobs:
           REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
     steps:
       - uses: actions/checkout@v3
-      - name: Install Dependencies
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: echo "$Greeting $NAME"
       - run: npm i
-      - name: Run tests
       - run: npx jest
       - run: npm run test-teardown
