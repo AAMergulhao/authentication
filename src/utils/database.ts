@@ -4,9 +4,6 @@ import { createConnection, Connection, getConnection } from "typeorm";
 // import databaseConfig from "../config/databaseConfig";
 
 const createDatabaseConnection = async (): Promise<Connection> => {
-    console.log(process.env);
-
-
     return await createConnection({
         type: "mysql",
         host: process.env.DATABASE_HOST,
