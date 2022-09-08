@@ -14,11 +14,11 @@ const globalTeardown = async (): Promise<void> => {
         })
         console.log('Starting test database cleanup');
         await clearDatabase().then(() => {
-            console.log('Database cleanup completed')
+            console.log('Database cleanup completed');
         })
     } catch (error) {
-        await closeDatabaseConnection()
-        console.error(error.message);
+        await closeDatabaseConnection();
+        throw new Error(error.message);
     }
 
 }
