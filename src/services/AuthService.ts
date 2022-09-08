@@ -51,8 +51,9 @@ class AuthService {
 
       password = hashPassword(password);
 
-      await this.userService.create(email, password)
+      const newUser = await this.userService.create(email, password)
 
+      await this.userService.addRole(newUser.id, 2)
       return true;
     } catch (error) {
       throw new Error(error.message);

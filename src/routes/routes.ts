@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import tokenVerifyMiddleware from "../middlewares/tokenVerify";
+import roleVerifyMiddleware from "../middlewares/roleVerify";
 
 import AuthController from "../controllers/AuthController";
 import UserController from "../controllers/UserController";
@@ -23,9 +24,9 @@ router.delete("/user/", tokenVerifyMiddleware, userController.delete);
 router.post("/user/role", tokenVerifyMiddleware, userController.addRole);
 router.delete("/user/role", tokenVerifyMiddleware, userController.removeRole);
 
-router.get("/role/", tokenVerifyMiddleware, roleController.fetch);
-router.post("/role/", tokenVerifyMiddleware, roleController.create);
-router.delete("/role/:id", tokenVerifyMiddleware, roleController.delete);
-router.get("/role/:id", tokenVerifyMiddleware, roleController.get);
+router.get("/role/", tokenVerifyMiddleware, roleVerifyMiddleware(['ADMIN']), roleController.fetch);
+router.post("/role/", tokenVerifyMiddleware, roleVerifyMiddleware(['ADMIN']), roleController.create);
+router.delete("/role/:id", tokenVerifyMiddleware, roleVerifyMiddleware(['ADMIN']), roleController.delete);
+router.get("/role/:id", tokenVerifyMiddleware, roleVerifyMiddleware(['ADMIN']), roleController.get);
 
 export default router;
