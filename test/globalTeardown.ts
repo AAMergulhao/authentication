@@ -5,7 +5,7 @@ import { clearDatabase, createDatabaseConnection } from "../src/utils/database";
 const globalTeardown = async (): Promise<void> => {
     console.log('Starting test environment teardown.')
     dotenv.config({
-        path: `.env.${process.env.NODE_ENV}`,
+        path: process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env",
     });
 
     await createDatabaseConnection().then(() => {

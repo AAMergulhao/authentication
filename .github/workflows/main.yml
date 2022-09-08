@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          
+
       - name: Create env file
         uses: SpicyPizza/create-envfile@v1.3
         with:
@@ -33,5 +33,5 @@ jobs:
           envkey_REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
 
       - run: npm i
-      - run: export NODE_ENV=test && npx jest
+      - run: npx jest
       - run: npm run test-teardown
