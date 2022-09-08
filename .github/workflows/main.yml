@@ -7,13 +7,21 @@ on:
     branches: [master]
 
 jobs:
-  test:
-    name: Test
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [14.x]
-    env:
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm i
+      - run: npx jest
+      - run: npm run test-teardown
+        env:
           NAME: TEST
           ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
           DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -24,13 +32,3 @@ jobs:
           PASSWORD_SALT_ROUNDS: ${{ secrets.PASSWORD_SALT_ROUNDS }}
           REFRESH_TOKEN_EXPIRATION: ${{ secrets.REFRESH_TOKEN_EXPIRATION }}
           REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: echo "$Greeting $NAME"
-      - run: npm i
-      - run: npx jest
-      - run: npm run test-teardown
