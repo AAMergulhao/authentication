@@ -18,8 +18,21 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+          envkey_DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          envkey_DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          envkey_DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          envkey_DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
+          envkey_DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          envkey_PASSWORD_SALT_ROUNDS: ${{ secrets.PASSWORD_SALT_ROUNDS }}
+          envkey_REFRESH_TOKEN_EXPIRATION: ${{ secrets.REFRESH_TOKEN_EXPIRATION }}
+          envkey_REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+          file_name: .env.test
       - run: npm i
-      - run: npx jest
+      - run: export NODE_ENV=TEST && npx jest
       - run: npm run test-teardown
         env:
           NAME: TEST
