@@ -1,4 +1,6 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+
+import CustomRequest from "../utils/CustomRequest";
 
 import AuthService from "../services/AuthService";
 class AuthController {
@@ -8,7 +10,7 @@ class AuthController {
     this.authService = new AuthService();
   }
 
-  public signUp = async (req: Request, res: Response): Promise<Response> => {
+  public signUp = async (req: CustomRequest, res: Response): Promise<Response> => {
     try {
       const { email, password } = req.body;
 
@@ -24,7 +26,7 @@ class AuthController {
     }
   };
 
-  public signIn = async (req: Request, res: Response): Promise<Response> => {
+  public signIn = async (req: CustomRequest, res: Response): Promise<Response> => {
     try {
       const { email, password } = req.body;
 
@@ -44,7 +46,7 @@ class AuthController {
     }
   };
 
-  public refresh = async (req: Request, res: Response): Promise<Response> => {
+  public refresh = async (req: CustomRequest, res: Response): Promise<Response> => {
     try {
       const refreshToken: string = req.headers['authorization'] as string;
 
@@ -64,7 +66,7 @@ class AuthController {
     }
   };
 
-  public verify = async (req: Request, res: Response): Promise<Response> => {
+  public verify = async (req: CustomRequest, res: Response): Promise<Response> => {
     try {
       const accessToken: string = req.headers['authorization'] as string;
 

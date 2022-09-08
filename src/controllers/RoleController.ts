@@ -1,4 +1,6 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+
+import CustomRequest from "../utils/CustomRequest";
 
 import RoleService from "../services/RoleService";
 class RoleController {
@@ -8,7 +10,7 @@ class RoleController {
         this.roleService = new RoleService();
     }
 
-    public create = async (req: Request, res: Response): Promise<Response> => {
+    public create = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const { name } = req.body;
 
@@ -24,7 +26,7 @@ class RoleController {
 
     }
 
-    public fetch = async (req: Request, res: Response): Promise<Response> => {
+    public fetch = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const roles = await this.roleService.fetch();
             return res.json(roles);
@@ -33,7 +35,7 @@ class RoleController {
         }
     }
 
-    public delete = async (req: Request, res: Response): Promise<Response> => {
+    public delete = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const { id } = req.params;
             if (!id || id.trim() === "") {
@@ -51,7 +53,7 @@ class RoleController {
         }
     }
 
-    public get = async (req: Request, res: Response): Promise<Response> => {
+    public get = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const { id } = req.params;
             if (!id || id.trim() === "") {

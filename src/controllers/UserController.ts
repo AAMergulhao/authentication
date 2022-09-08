@@ -1,4 +1,6 @@
-import { Request, Response } from "express";
+import { Response } from "express";
+
+import CustomRequest from "../utils/CustomRequest";
 
 import UserService from "../services/UserService";
 class UserController {
@@ -8,7 +10,7 @@ class UserController {
         this.userService = new UserService();
     }
 
-    public get = async (req: Request, res: Response): Promise<Response> => {
+    public get = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const user = await this.userService.get(req.id);
 
@@ -20,7 +22,7 @@ class UserController {
         }
     };
 
-    public update = async (req: Request, res: Response): Promise<Response> => {
+    public update = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const user = await this.userService.update({ id: req.id, ...req.body });
 
@@ -32,7 +34,7 @@ class UserController {
         }
     };
 
-    public delete = async (req: Request, res: Response): Promise<Response> => {
+    public delete = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const successfullyDeleted = await this.userService.delete(req.id);
 
@@ -50,7 +52,7 @@ class UserController {
         }
     };
 
-    public addRole = async (req: Request, res: Response): Promise<Response> => {
+    public addRole = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const { userId, roleId } = req.body;
 
@@ -68,7 +70,7 @@ class UserController {
         }
     };
 
-    public removeRole = async (req: Request, res: Response): Promise<Response> => {
+    public removeRole = async (req: CustomRequest, res: Response): Promise<Response> => {
         try {
             const { userId, roleId } = req.body;
 

@@ -1,8 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
+
+import CustomRequest from "../utils/CustomRequest";
 
 import AuthService from '../services/AuthService';
 
-function tokenVerify(req: Request, res: Response, next: NextFunction) {
+function tokenVerify(req: CustomRequest, res: Response, next: NextFunction) {
     try {
         const accessToken: string = req.headers['authorization'] as string;
 
