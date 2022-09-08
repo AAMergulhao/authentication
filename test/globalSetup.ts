@@ -8,7 +8,7 @@ tsNode.register()
 
 const globalSetup = async (): Promise<void> => {
     dotenv.config({
-        path: `.env.${process.env.NODE_ENV}`,
+        path: process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : ".env",
     });
 
     console.log('\n');
