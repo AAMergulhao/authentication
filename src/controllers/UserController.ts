@@ -4,89 +4,89 @@ import CustomRequest from "../utils/CustomRequest";
 
 import UserService from "../services/UserService";
 class UserController {
-    public userService: UserService;
+  public userService: UserService;
 
-    constructor() {
-        this.userService = new UserService();
+  constructor() {
+    this.userService = new UserService();
+  }
+
+  public get = async (req: CustomRequest, res: Response): Promise<Response> => {
+    try {
+      const user = await this.userService.get(req.id);
+
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500).json({
+        message: error.message,
+      });
     }
+  };
 
-    public get = async (req: CustomRequest, res: Response): Promise<Response> => {
-        try {
-            const user = await this.userService.get(req.id);
+  public update = async (req: CustomRequest, res: Response): Promise<Response> => {
+    try {
+      const user = await this.userService.update({ id: req.id, ...req.body });
 
-            return res.status(200).json(user);
-        } catch (error) {
-            return res.status(500).json({
-                message: error.message,
-            });
-        }
-    };
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
 
-    public update = async (req: CustomRequest, res: Response): Promise<Response> => {
-        try {
-            const user = await this.userService.update({ id: req.id, ...req.body });
+  public delete = async (req: CustomRequest, res: Response): Promise<Response> => {
+    try {
+      const successfullyDeleted = await this.userService.delete(req.id);
 
-            return res.status(200).json(user);
-        } catch (error) {
-            return res.status(500).json({
-                message: error.message,
-            });
-        }
-    };
+      if (!successfullyDeleted) {
+        throw new Error("Error while deleting user.");
+      }
 
-    public delete = async (req: CustomRequest, res: Response): Promise<Response> => {
-        try {
-            const successfullyDeleted = await this.userService.delete(req.id);
+      return res.status(200).json({
+        message: 'User successfully deleted.'
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
 
-            if (!successfullyDeleted) {
-                throw new Error("Error while deleting user.");
-            }
+  public addRole = async (req: CustomRequest, res: Response): Promise<Response> => {
+    try {
+      const { userId, roleId } = req.body;
 
-            return res.status(200).json({
-                message: 'User successfully deleted.'
-            });
-        } catch (error) {
-            return res.status(500).json({
-                message: error.message,
-            });
-        }
-    };
+      if (!userId || !roleId) {
+        throw new Error("User id and Role id cannot be null or empty.");
+      }
 
-    public addRole = async (req: CustomRequest, res: Response): Promise<Response> => {
-        try {
-            const { userId, roleId } = req.body;
+      const user = await this.userService.addRole(userId, roleId);
 
-            if (!userId || !roleId) {
-                throw new Error("User id and Role id cannot be null or empty.");
-            }
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
 
-            const user = await this.userService.addRole(userId, roleId);
+  public removeRole = async (req: CustomRequest, res: Response): Promise<Response> => {
+    try {
+      const { userId, roleId } = req.body;
 
-            return res.status(200).json(user);
-        } catch (error) {
-            return res.status(500).json({
-                message: error.message,
-            });
-        }
-    };
+      if (!userId || !roleId) {
+        throw new Error("User id and Role id cannot be null or empty.");
+      }
 
-    public removeRole = async (req: CustomRequest, res: Response): Promise<Response> => {
-        try {
-            const { userId, roleId } = req.body;
+      const user = await this.userService.removeRole(userId, roleId);
 
-            if (!userId || !roleId) {
-                throw new Error("User id and Role id cannot be null or empty.");
-            }
-
-            const user = await this.userService.removeRole(userId, roleId);
-
-            return res.status(200).json(user);
-        } catch (error) {
-            return res.status(500).json({
-                message: error.message,
-            });
-        }
-    };
+      return res.status(200).json(user);
+    } catch (error) {
+      return res.status(500).json({
+        message: error.message,
+      });
+    }
+  };
 }
 
 export default UserController;

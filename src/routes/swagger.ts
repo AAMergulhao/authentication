@@ -8,7 +8,7 @@ const router = Router();
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, { customSiteTitle: "Authentication API Docs" }));
 
 router.get('/docs.json', (req: Request, res: Response) => {
-    res.json(swaggerFile);
-})
+  res.json(swaggerFile);
+});
 
 export default router;

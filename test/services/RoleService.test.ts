@@ -4,13 +4,13 @@ import { closeDatabaseConnection, createDatabaseConnection } from "../../src/uti
 const roleService: RoleService = new RoleService();
 
 beforeAll(async () => {
-    await createDatabaseConnection();
-})
+  await createDatabaseConnection();
+});
 test("Should create a valid Role", async () => {
-    const newRole = await roleService.create(`TEST_ROLE`)
-    expect(newRole.hasId()).toBe(true);
+  const newRole = await roleService.create(`TEST_ROLE`);
+  expect(newRole.hasId()).toBe(true);
 });
 
 afterAll(async () => {
-    await closeDatabaseConnection()
-})
+  await closeDatabaseConnection();
+});

@@ -15,7 +15,7 @@ function getTokens(user: User): Auth {
 
     const refreshToken = jwt.sign({ ...user }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: parseInt(process.env.REFRESH_TOKEN_EXPIRATION) * 60 });
 
-    return { accessToken, refreshToken }
+    return { accessToken, refreshToken };
   } catch (error) {
     throw new Error(error.message);
   }
@@ -51,9 +51,9 @@ class AuthService {
 
       password = hashPassword(password);
 
-      const newUser = await this.userService.create(email, password)
+      const newUser = await this.userService.create(email, password);
 
-      await this.userService.addRole(newUser.id, 2)
+      await this.userService.addRole(newUser.id, 2);
       return true;
     } catch (error) {
       throw new Error(error.message);

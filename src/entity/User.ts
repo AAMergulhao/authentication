@@ -17,19 +17,19 @@ export interface UserI {
 @Entity("user")
 class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+    id: number;
 
   @Column()
-  email: string;
+    email: string;
 
   @Column()
-  password: string;
+    password: string;
 
-  @ManyToMany((type) => Role, (role) => role.users, {
+  @ManyToMany(() => Role, (role) => role.users, {
     onDelete: "CASCADE",
   })
   @JoinTable({ name: "user_roles" })
-  roles: Role[];
+    roles: Role[];
 }
 
 export default User;

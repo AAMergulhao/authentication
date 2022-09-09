@@ -73,7 +73,7 @@ class AuthController {
       if (!accessToken || accessToken.trim() === "") {
         return res.status(400).json({
           message: "AccessToken cannot be null or empty.",
-        })
+        });
       }
       const isTokenValid = await this.authService.verify(accessToken);
 

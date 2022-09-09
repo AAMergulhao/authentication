@@ -1,4 +1,6 @@
-import { Request } from 'express'
-export default interface CustomRequest extends Request {
+import { Request } from 'express';
+interface CustomRequest extends Request {
     id?: number
 }
+
+export default CustomRequest;
