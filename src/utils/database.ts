@@ -17,7 +17,7 @@ const createDatabaseConnection = async (): Promise<Connection> => {
       "src/entity/**/*.ts"
     ],
     migrations: [
-      "src/migration/**/*.ts"
+      "src/migrations/**/*.ts"
     ],
     subscribers: [
       "src/subscriber/**/*.ts"
