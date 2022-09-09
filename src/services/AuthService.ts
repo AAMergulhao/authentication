@@ -22,17 +22,13 @@ function getTokens(user: User): Auth {
 
 }
 
-function hashPassword(password: string): string {
-  bcrypt.hash(
-    password,
-    parseInt(process.env.PASSWORD_SALT_ROUNDS),
-    (error, hash) => {
-      if (error) {
-        throw new Error(error.message);
-      }
-      password = hash;
-    }
-  );
+async function hashPassword(password: string): Promise<string> {
+  await bcrypt.hash(password, parseInt(process.env.PASSWORD_SALT_ROUNDS)).then((hash) => {
+    console.log({ hash, password });
+    password = hash;
+  }).catch(error => { throw new Error(error.message) });
+  console.log({ password });
+
   return password;
 }
 
@@ -49,7 +45,7 @@ class AuthService {
         throw new Error("There is already a user with this e-mail.");
       }
 
-      password = hashPassword(password);
+      password = await hashPassword(password);
 
       const newUser = await this.userService.create(email, password);
 
@@ -63,14 +59,19 @@ class AuthService {
   public async signIn(email: string, password: string): Promise<Auth> {
     try {
 
-      password = hashPassword(password);
+      const storedUser = await User.findOne({ email });
 
-      const user = await User.findOne({ email, password });
-      if (!user) {
+      if (!storedUser) {
         throw new Error("Email and password does not match.");
       }
 
-      return getTokens(user);
+      await bcrypt.compare(password, storedUser.password).then((isValid) => {
+        if (!isValid) {
+          throw new Error("Email and password does not match.");
+        }
+      });
+
+      return getTokens(storedUser);
     } catch (error) {
       throw new Error(error.message);
     }
