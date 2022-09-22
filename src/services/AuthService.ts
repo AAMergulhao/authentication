@@ -24,10 +24,8 @@ function getTokens(user: User): Auth {
 
 async function hashPassword(password: string): Promise<string> {
   await bcrypt.hash(password, parseInt(process.env.PASSWORD_SALT_ROUNDS)).then((hash) => {
-    console.log({ hash, password });
     password = hash;
   }).catch(error => { throw new Error(error.message) });
-  console.log({ password });
 
   return password;
 }

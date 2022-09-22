@@ -18,7 +18,7 @@ const globalTeardown = async (): Promise<void> => {
     });
   } catch (error) {
     await closeDatabaseConnection();
-    throw new Error(error.message);
+    throw error;
   }
 
 };
