@@ -3,7 +3,7 @@ import * as bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import * as path from 'path';
-
+import colors from 'colors';
 
 import routes from "./routes/routes";
 import swagger from './routes/swagger';
@@ -30,6 +30,14 @@ class App {
     this.server.use(swagger);
 
     await createDatabaseConnection();
+
+    routes.stack.forEach(routeStack => {
+      const methods = Object.keys(routeStack.route.methods);
+
+      for (const method of methods) {
+        console.log(colors.blue(`${(method.toUpperCase() + "   ").slice(0, 6)} ----  ${routeStack.route.path}`));
+      }
+    });
   }
 }
 
