@@ -1,14 +1,14 @@
 import { Response } from "express";
 
-import CustomRequest from "../utils/CustomRequest";
+import CustomRequest from "@utils/CustomRequest";
 
-import UserService from "../services/UserService";
+import { IUserService } from "@services/UserService";
+import { inject, injectable } from "tsyringe";
+
+@injectable()
 class UserController {
-  public userService: UserService;
 
-  constructor() {
-    this.userService = new UserService();
-  }
+  constructor(@inject('UserService') private userService: IUserService) { }
 
   public get = async (req: CustomRequest, res: Response): Promise<Response> => {
     try {

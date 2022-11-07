@@ -20,7 +20,6 @@
     "indent": [
       2,
       2
-    ],
-    "no-unused-vars": 2
+    ]
   }
 }

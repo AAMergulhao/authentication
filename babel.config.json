@@ -16,6 +16,7 @@
             {
                 "legacy": true
             }
-        ]
+        ],
+        "babel-plugin-transform-typescript-metadata"
     ]
 }

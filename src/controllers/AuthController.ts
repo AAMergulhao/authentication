@@ -1,13 +1,13 @@
 import { Response } from "express";
 
-import CustomRequest from "../utils/CustomRequest";
+import CustomRequest from "@utils/CustomRequest";
 
-import AuthService from "../services/AuthService";
+import { IAuthService } from "@services/AuthService";
+import { inject, injectable } from "tsyringe";
+
+@injectable()
 class AuthController {
-  public authService: AuthService;
-
-  constructor() {
-    this.authService = new AuthService();
+  constructor(@inject('AuthService') private authService: IAuthService) {
   }
 
   public signUp = async (req: CustomRequest, res: Response): Promise<Response> => {

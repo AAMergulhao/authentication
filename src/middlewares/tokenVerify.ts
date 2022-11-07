@@ -1,8 +1,10 @@
 import { Response, NextFunction } from "express";
 
-import CustomRequest from "../utils/CustomRequest";
+import CustomRequest from "@utils/CustomRequest";
 
-import AuthService from '../services/AuthService';
+import { IAuthService } from '@services/AuthService';
+
+import container from '@config/container';
 
 function tokenVerify(req: CustomRequest, res: Response, next: NextFunction) {
   try {
@@ -14,7 +16,7 @@ function tokenVerify(req: CustomRequest, res: Response, next: NextFunction) {
       });
     }
 
-    const authService = new AuthService();
+    const authService: IAuthService = container.resolve('AuthService');
 
     const decodedToken = authService.verify(accessToken);
     req.id = decodedToken.id;

@@ -1,14 +1,15 @@
 import { Response } from "express";
 
-import CustomRequest from "../utils/CustomRequest";
+import CustomRequest from "@utils/CustomRequest";
 
-import RoleService from "../services/RoleService";
+import { IRoleService } from "@services/RoleService";
+
+import { inject, injectable } from 'tsyringe';
+
+@injectable()
 class RoleController {
-  public roleService: RoleService;
 
-  constructor() {
-    this.roleService = new RoleService();
-  }
+  constructor(@inject('RoleService') private roleService: IRoleService) { }
 
   public create = async (req: CustomRequest, res: Response): Promise<Response> => {
     try {

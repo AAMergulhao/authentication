@@ -5,9 +5,9 @@ import dotenv from "dotenv";
 import * as path from 'path';
 import colors from 'colors';
 
-import routes from "./routes/routes";
-import swagger from './routes/swagger';
-import { createDatabaseConnection } from './utils/database';
+import routes from "@routes/routes";
+import swagger from '@routes/swagger';
+import { createDatabaseConnection } from '@utils/database';
 
 class App {
   public server: express.Application;

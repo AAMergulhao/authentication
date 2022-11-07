@@ -1,11 +1,13 @@
 import { Response, NextFunction } from "express";
 
-import CustomRequest from "../utils/CustomRequest";
+import CustomRequest from "@utils/CustomRequest";
 
-import UserService from "../services/UserService";
+import { IUserService } from "@services/UserService";
+
+import container from "@config/container";
 
 function roleVerify(requiredRoles: string[]) {
-  const userService = new UserService();
+  const userService: IUserService = container.resolve('UserService');
   return async (req: CustomRequest, res: Response, next: NextFunction) => {
     const user = await userService.get(req.id);
 

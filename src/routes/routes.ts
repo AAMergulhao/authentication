@@ -1,15 +1,17 @@
 import { Router } from "express";
 
-import tokenVerifyMiddleware from "../middlewares/tokenVerify";
-import roleVerifyMiddleware from "../middlewares/roleVerify";
+import tokenVerifyMiddleware from "@middlewares/tokenVerify";
+import roleVerifyMiddleware from "@middlewares/roleVerify";
 
-import AuthController from "../controllers/AuthController";
-import UserController from "../controllers/UserController";
-import RoleController from "../controllers/RoleController";
+import AuthController from "@controllers/AuthController";
+import UserController from "@controllers/UserController";
+import RoleController from "@controllers/RoleController";
 
-const authController = new AuthController();
-const userController = new UserController();
-const roleController = new RoleController();
+import container from "@config/container";
+
+const authController: AuthController = container.resolve('AuthController');
+const userController: UserController = container.resolve('UserController');
+const roleController: RoleController = container.resolve('RoleController');
 
 const router = Router();
 

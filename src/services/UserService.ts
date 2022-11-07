@@ -1,7 +1,24 @@
-import Role from '../entity/Role';
-import User, { UserI } from '../entity/User';
+import Role from '@entity/Role';
+import User, { UserI } from '@entity/User';
+import { IRoleRepository } from '@repositories/RoleRepository';
+import { IUserRepository } from '@repositories/UserRepository';
 
-class UserService {
+import { inject, injectable } from 'tsyringe';
+
+export interface IUserService {
+  create(email: string, password: string): Promise<User>,
+  get(id: number): Promise<User>,
+  update(user: UserI): Promise<UserI>,
+  delete(id: number): Promise<boolean>
+  addRole(userId: number, roleId: number): Promise<User>,
+  removeRole(userId: number, roleId: number): Promise<User>,
+  getByEmail(email: string): Promise<User>,
+  getByEmailAndPassword(email: string, password: string): Promise<User>
+}
+@injectable()
+class UserService implements IUserService {
+
+  constructor(@inject('UserRepository') private userRepository: IUserRepository, @inject('RoleRepository') private roleRepository: IRoleRepository) { }
 
   public create = async (email: string, password: string): Promise<User> => {
     try {
@@ -9,9 +26,7 @@ class UserService {
         throw new Error('E-mail and password cannot be null or empty.');
       }
 
-      const newUser = await User.create({ email, password });
-
-      return await User.save(newUser);
+      return await this.userRepository.create(email, password);
     } catch (error) {
       throw new Error(error.message);
     }
@@ -20,7 +35,7 @@ class UserService {
 
   public async get(id: number): Promise<User> {
     try {
-      const user = await User.findOne({ id }, { relations: ['roles'] });
+      const user = await this.userRepository.get({ id } as User);
       if (!user) {
         throw new Error('User not found');
       }
@@ -39,9 +54,8 @@ class UserService {
       if (user.email.trim() === "") {
         throw new Error('E-mail cannot be null or empty');
       }
-      await User.save(user as User);
 
-      const updatedUser = await User.findOne({ id: user.id });
+      const updatedUser = await this.userRepository.update(user as User);
 
       delete updatedUser.password;
 
@@ -53,9 +67,7 @@ class UserService {
 
   public async delete(id: number): Promise<boolean> {
     try {
-      const deleteResult = await User.delete({ id });
-
-      return deleteResult.affected >= 1 ? true : false;
+      return await this.userRepository.delete(id);
     } catch (error) {
       throw new Error(error.message);
     }
@@ -68,7 +80,7 @@ class UserService {
       throw new Error('User does not exists');
     }
 
-    const role = await Role.findOne({ id: roleId });
+    const role = await this.roleRepository.get({ id: roleId } as Role);
 
     if (!role) {
       throw new Error('Role does not exists');
@@ -81,7 +93,7 @@ class UserService {
 
     user.roles.push(role);
 
-    return await User.save(user as User);
+    return await this.userRepository.update(user as User);
   }
 
   public async removeRole(userId: number, roleId: number): Promise<User> {
@@ -91,7 +103,7 @@ class UserService {
       throw new Error('User does not exists');
     }
 
-    const role = await Role.findOne({ id: roleId });
+    const role = await this.roleRepository.get({ id: roleId } as Role);
 
     if (!role) {
       throw new Error('Role does not exists');
@@ -106,12 +118,28 @@ class UserService {
       return role.id !== roleId;
     });
 
-    return await User.save(user as User);
+    return await this.userRepository.update(user as User);
   }
 
   public async getByEmail(email: string): Promise<User> {
     try {
-      const user = await User.findOne({ email }, { relations: ['roles'] });
+      const user = await this.userRepository.get({ email } as User);
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      delete user.password;
+
+      return user;
+    } catch (error) {
+      throw new Error(error.message);
+
+    }
+  }
+
+  public async getByEmailAndPassword(email: string, password: string): Promise<User> {
+    try {
+      const user = await this.userRepository.get({ email, password } as User);
       if (!user) {
         throw new Error('User not found');
       }
