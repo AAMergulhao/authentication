@@ -45,10 +45,8 @@
       "typeorm": "^0.2.41"
    },
    "scripts": {
-      "start": "ts-node src/index.ts",
-      "start:local": "export NODE_ENV=local && dotenv -e .env.$NODE_ENV -- nodemon tsconfig-paths/register src/index.ts",
+      "start": "export NODE_ENV=local && nodemon tsconfig-paths/register src/index.ts",
       "test": "jest",
-      "test-teardown": "ts-node test/globalTeardown.ts",
       "lint": "eslint . --ext .ts",
       "lint:fix": "eslint . --ext .ts --fix",
       "typeorm:local": "export NODE_ENV=local && dotenv -e .env.$NODE_ENV -- node --require ts-node/register ./node_modules/typeorm/cli.js -f ./src/config/databaseConfig.ts",
